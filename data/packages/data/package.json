@@ -8,8 +8,7 @@
 	},
 	"scripts": {
 		"clean": "rimraf ./node_modules",
-		"dev": "nodemon --watch . -e js,html -x 'npm run start-debug'",
-		"start-debug": "node --inspect start.js",
+		"dev": "nodemon --watch . -e js,html -x 'npm run start'",
 		"start": "node start.js",
 		"test": "lab ./__tests__/",
 		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'"
