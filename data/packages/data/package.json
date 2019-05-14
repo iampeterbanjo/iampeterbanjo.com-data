@@ -11,7 +11,7 @@
 		"dev": "nodemon --watch . -e js,html -x 'npm run start-debug'",
 		"start-debug": "node --inspect start.js",
 		"start": "node start.js",
-		"test": "lab --verbose --timeout 4000 -c ./__tests__/",
+		"test": "lab ./__tests__/",
 		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'"
 	},
 	"keywords": [
