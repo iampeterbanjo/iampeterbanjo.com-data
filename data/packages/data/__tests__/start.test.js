@@ -7,5 +7,7 @@ const { test, suite } = lab;
 exports.lab = lab;
 
 suite('data', () => {
-	expect('not implemented').to.equal('true');
+	test('first test', () => {
+		expect('not implemented').to.equal('true');
+	});
 });
