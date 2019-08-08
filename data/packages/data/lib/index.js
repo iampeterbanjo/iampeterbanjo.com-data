@@ -15,23 +15,37 @@ const filtering = predicate => reducing => (result, input) =>
 
 const chain = (xs, x) => xs.concat(x);
 
-const inspect = ({ value, index, move }) => {
-	console.log(move);
-	return { value, index, move };
+const inspect = all => {
+	console.log(all);
+	return all;
 };
 
-const setCharacterName = ({ value, index, move }) => {
+const setCharacterName = ({ value, index, character, ...rest }) => {
 	if (index !== 1) return value;
 	// eslint-disable-next-line no-param-reassign
-	move.name = R.invertObj(value).Name;
-	return { value, index, move };
+	character.name = R.invertObj(value).Name;
+	return { value, index, character, ...rest };
 };
 
+const updateStatus = ({ index, status, ...rest }) => {
+	if (index > 3) {
+		return {
+			...rest,
+			index,
+			status: { ...status, type: 'normal' },
+		};
+	}
+	return { index, status, ...rest };
+};
+
+const character = {};
+const status = {};
 csv({ delimiter: '\t' })
 	.fromFile(mkxTsvPath)
 	.subscribe((value, index) => {
-		[{ value, index, move: {} }]
+		[{ value, index, character, status }]
 			// .reduce(mapping(inspect)(chain), [])
+			.reduce(mapping(updateStatus)(chain), [])
 			.reduce(mapping(setCharacterName)(chain), [])
 			.reduce(mapping(inspect)(chain), []);
 	});

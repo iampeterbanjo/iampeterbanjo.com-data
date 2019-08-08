@@ -1,5 +1,5 @@
 const exampleOutput = {
-	character: 'Cassie Cage',
+	name: 'Cassie Cage',
 	moves: [
 		{
 			name: 'Low jab',

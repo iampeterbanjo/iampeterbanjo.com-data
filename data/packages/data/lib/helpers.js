@@ -16,7 +16,7 @@ const MoveSchema = Joi.object({
 });
 
 const CharacterSchema = Joi.object({
-	character: Joi.string(),
+	name: Joi.string(),
 	moves: Joi.array().items(MoveSchema),
 });
 
