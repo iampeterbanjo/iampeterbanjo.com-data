@@ -2,7 +2,11 @@
 	"name": "data",
 	"version": "1.0.0",
 	"description": "Data processing",
-	"scripts": {},
+	"scripts": {
+		"start": "node ./lib/index.js",
+		"test": "lab ./__tests__/",
+		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'"
+	},
 	"keywords": [
 		"data",
 		"parsing",
@@ -13,6 +17,14 @@
 		"name": "Peter Banjo"
 	},
 	"license": "ISC",
-	"dependencies": {},
-	"devDependencies": {}
+	"dependencies": {
+		"@hapi/joi": "^15.1.0",
+		"csvtojson": "^2.0.10",
+		"ramda": "^0.26.1"
+	},
+	"devDependencies": {
+		"@hapi/code": "^6.0.0",
+		"@hapi/lab": "^20.0.0",
+		"nodemon": "^1.19.1"
+	}
 }
