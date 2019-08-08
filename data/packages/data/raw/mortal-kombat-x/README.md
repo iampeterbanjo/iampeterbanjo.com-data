@@ -45,8 +45,9 @@
 
 ### Strings
 
-- Normals are 1 key input
-- Combos are more than 1 input
+- Normals have one hit level
+- Combos have more than 1 hit level
+- Specials can be meter burned
 - Moves with "+" between them must be pressed simultaneously
 - Startup frame data for Combos is for the last input. The first Normal in the Combo is the startup of the Combo
 

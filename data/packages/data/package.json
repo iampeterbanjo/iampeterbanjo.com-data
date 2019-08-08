@@ -2,7 +2,9 @@
 	"name": "data",
 	"version": "1.0.0",
 	"description": "Data processing",
-	"scripts": {},
+	"scripts": {
+		"start": "node ./lib/index.js"
+	},
 	"keywords": [
 		"data",
 		"parsing",
@@ -14,7 +16,8 @@
 	},
 	"license": "ISC",
 	"dependencies": {
-		"csvtojson": "^2.0.10"
+		"csvtojson": "^2.0.10",
+		"ramda": "^0.26.1"
 	},
 	"devDependencies": {}
 }
