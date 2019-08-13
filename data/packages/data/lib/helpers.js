@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi');
+const R = require('ramda');
 
 const MoveSchema = Joi.object({
 	name: Joi.string().lowercase(),
@@ -24,6 +25,35 @@ const checkCharacter = character => {
 	return CharacterSchema.validate(character);
 };
 
+const checkMove = move => {
+	return MoveSchema.validate(move);
+};
+
+const makeMove = (output, type) => {
+	const [name] = Object.keys(output);
+	const toNumber = x => x * 1;
+	const splitOnComma = x => x.split(',');
+	const transformations = {
+		name: R.trim,
+		field2: splitOnComma,
+		field3: R.toLower,
+		field4: toNumber,
+		field5: toNumber,
+		field6: toNumber,
+		field7: toNumber,
+		field8: toNumber,
+		field9: toNumber,
+	};
+	const move = {
+		name,
+		type,
+	};
+
+	return R.evolve(transformations, move);
+};
+
 module.exports = {
 	checkCharacter,
+	checkMove,
+	makeMove,
 };
