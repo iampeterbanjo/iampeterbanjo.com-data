@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 const Path = require('path');
 const csv = require('csvtojson');
-// const R = require('ramda');
+const R = require('ramda');
 
 (async () => {
 	class Character {
@@ -12,6 +12,30 @@ const csv = require('csvtojson');
 		}
 
 		addMove(options) {
+			// 'Cassie Cage': 'Severance Package',
+			// field2: 'F2, 1+3',
+			// field3: 'M',
+			// field4: '9',
+			// field5: '4',
+			// field6: '29',
+			// field7: '-15',
+			// field8: '1',
+			// field9: '13'
+
+			// const [name] = Object.values(options);
+			const toNumber = x => x * 1;
+			const splitOnComma = x => x.split(',');
+			const transformations = {
+				field2: splitOnComma,
+				field3: R.toLower,
+				field4: toNumber,
+				field5: toNumber,
+				field6: toNumber,
+				field7: toNumber,
+				field8: toNumber,
+				field9: toNumber,
+			};
+			const move = R.evolve(transformations, options);
 			// const {
 			// 	name,
 			// 	typename,
@@ -26,7 +50,7 @@ const csv = require('csvtojson');
 			// 	notesname,
 			// 	meter_burnname,
 			// } = options;
-			this.moves.push(options);
+			this.moves.push(move);
 		}
 
 		set setName(name) {
