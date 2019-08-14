@@ -17,8 +17,43 @@ suite('Given checkCharacter', () => {
 	});
 });
 
+suite('Given makeMove', () => {
+	suite('And an raw data', () => {
+		const raw = {
+			'Cassie Cage': 'Air Power Slam',
+			field2: '(Air) D1+3',
+			field3: 'UB',
+			field4: '7',
+			field5: '2',
+			field6: '11',
+			field7: 'N/A',
+			field8: '-2',
+			field9: '53',
+		};
+
+		test('the keys are correct', () => {
+			const move = makeMove(raw, 'normals');
+			const keys = Object.keys(move);
+
+			expect(keys).to.only.include([
+				'notation',
+				'start_up',
+				'hit_level',
+				'name',
+				'type',
+				'active',
+				'recovery',
+				'block_advantage',
+				'hit_advantage',
+				'cancel',
+				'notes',
+			]);
+		});
+	});
+});
+
 suite('Given checkMove', () => {
-	suite('And an invalid output', () => {
+	suite('And an raw data', () => {
 		const invalid = {
 			'Cassie Cage': 'Air Power Slam',
 			field2: '(Air) D1+3',
@@ -36,7 +71,8 @@ suite('Given checkMove', () => {
 		});
 
 		test('it passes validation after transformation', async () => {
-			await expect(checkMove(makeMove(invalid))).not.to.reject();
+			const result = checkMove(makeMove(invalid));
+			await expect(result).not.to.reject();
 		});
 	});
 });
