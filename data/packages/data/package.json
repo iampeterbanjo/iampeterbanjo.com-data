@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "Data processing",
 	"scripts": {
+		"dev": "nodemon -e js,json,html,md -x 'yarn start'",
 		"start": "node ./lib/index.js",
 		"test": "lab ./__tests__/",
 		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'"
