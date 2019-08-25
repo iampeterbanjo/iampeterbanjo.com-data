@@ -4,10 +4,10 @@ const Lab = require('@hapi/lab');
 const { exampleOutput } = require('../fixtures');
 const { checkCharacter, checkMove, makeMove } = require('../../lib/helpers');
 
-const lab = Lab.script();
+export const lab = Lab.script();
 const { test, suite } = lab;
 
-exports.lab = lab;
+
 
 suite('Given checkCharacter', () => {
 	suite('And an example output', () => {
