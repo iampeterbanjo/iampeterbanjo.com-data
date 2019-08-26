@@ -75,7 +75,7 @@ const makeMove = (raw, type) => {
 	return R.evolve(transformations, move);
 };
 
-export default  {
+module.exports = {
 	checkCharacter,
 	checkMove,
 	makeMove,

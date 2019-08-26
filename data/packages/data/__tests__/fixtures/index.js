@@ -60,6 +60,6 @@ const exampleOutput = {
 	],
 };
 
-export default  {
+module.exports = {
 	exampleOutput,
 };
