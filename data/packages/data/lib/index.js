@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-/* eslint-disable no-param-reassign */
+
 const Path = require('path');
 const csv = require('csvtojson');
 const R = require('ramda');
@@ -22,7 +22,7 @@ const R = require('ramda');
 		toString() {
 			return JSON.stringify({
 				name: this.name,
-				moves: this.moves,
+				moves: this.moves
 			});
 		}
 	}
@@ -67,7 +67,7 @@ const R = require('ramda');
 			field6: toNumber,
 			field7: toNumber,
 			field8: toNumber,
-			field9: toNumber,
+			field9: toNumber
 		};
 		const move = R.evolve(transformations, value);
 		// const {
