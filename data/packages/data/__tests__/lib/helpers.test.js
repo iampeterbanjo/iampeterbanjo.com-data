@@ -1,10 +1,10 @@
-import { expect } from "@hapi/code";
-import Lab from "@hapi/lab";
+const { expect } = require("@hapi/code");
+const Lab = require("@hapi/lab");
 
 const { exampleOutput } = require("../fixtures");
 const { checkCharacter, checkMove, makeMove } = require("../../lib/helpers");
 
-export const lab = Lab.script();
+const lab = (exports.lab = Lab.script());
 const { test, suite } = lab;
 
 suite("Given checkCharacter", () => {
