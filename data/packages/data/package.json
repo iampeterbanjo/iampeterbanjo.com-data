@@ -3,10 +3,20 @@
 	"version": "1.0.0",
 	"description": "Data processing",
 	"scripts": {
+		"build": "tsc -p tsconfig.build.json; run-p copy-*",
+		"prebuild": "rm -rf build",
+		"before-commit": "run-s format",
+		"clean": "rm -rf node_modules",
+		"format": "pretty-quick --staged",
 		"dev": "nodemon -e js,json,html,md -x 'yarn start'",
 		"start": "node ./lib/index.js",
 		"test": "lab ./__tests__/",
 		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run before-commit"
+		}
 	},
 	"keywords": [
 		"data",
@@ -21,11 +31,16 @@
 	"dependencies": {
 		"@hapi/joi": "^15.1.0",
 		"csvtojson": "^2.0.10",
-		"ramda": "^0.26.1"
+		"ramda": "^0.26.1",
+		"typescript": "^3.7.3"
 	},
 	"devDependencies": {
 		"@hapi/code": "^6.0.0",
-		"@hapi/lab": "^20.0.0",
-		"nodemon": "^1.19.1"
+		"@hapi/lab": "^20.4.0",
+		"husky": "^3.1.0",
+		"nodemon": "^1.19.1",
+		"prettier": "^1.19.1",
+		"pretty-quick": "^2.0.1",
+		"tsc-watch": "^4.0.0"
 	}
 }
