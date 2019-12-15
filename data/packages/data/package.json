@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "tsc -p tsconfig.build.json; run-p copy-*",
 		"prebuild": "rm -rf build",
+		"start-ts": "ts-node ./src/index.ts",
 		"before-commit": "run-s format",
 		"clean": "rm -rf node_modules",
 		"format": "pretty-quick --staged",
@@ -32,7 +33,9 @@
 		"@hapi/joi": "^15.1.0",
 		"csvtojson": "^2.0.10",
 		"ramda": "^0.26.1",
-		"typescript": "^3.7.3"
+		"rxjs": "^6.5.3",
+		"typescript": "^3.7.3",
+		"xmlhttprequest": "^1.8.0"
 	},
 	"devDependencies": {
 		"@hapi/code": "^6.0.0",
@@ -41,6 +44,7 @@
 		"nodemon": "^1.19.1",
 		"prettier": "^1.19.1",
 		"pretty-quick": "^2.0.1",
+		"ts-node": "^8.5.4",
 		"tsc-watch": "^4.0.0"
 	}
 }
