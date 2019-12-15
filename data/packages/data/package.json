@@ -4,7 +4,7 @@
 	"description": "Data processing",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "tsc -p tsconfig.build.json; run-p copy-*",
+		"build": "tsc -p tsconfig.build.json",
 		"prebuild": "rm -rf build",
 		"start-ts": "ts-node ./src/index.ts",
 		"before-commit": "run-s format",
@@ -13,7 +13,8 @@
 		"dev": "nodemon -e js,json,html,md -x 'yarn start'",
 		"start": "node ./lib/index.js",
 		"test": "lab ./__tests__/",
-		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'"
+		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'",
+		"watch-ts": "tsc-watch --noClear -p tsconfig.build.json"
 	},
 	"husky": {
 		"hooks": {
@@ -33,6 +34,7 @@
 	"dependencies": {
 		"@hapi/joi": "^15.1.0",
 		"csvtojson": "^2.0.10",
+		"models": "file:../models",
 		"ramda": "^0.26.1",
 		"rxjs": "^6.5.3",
 		"typescript": "^3.7.3",
@@ -41,6 +43,7 @@
 	"devDependencies": {
 		"@hapi/code": "^6.0.0",
 		"@hapi/lab": "^20.4.0",
+		"@types/ramda": "^0.26.38",
 		"husky": "^3.1.0",
 		"nodemon": "^1.19.1",
 		"prettier": "^1.19.1",
