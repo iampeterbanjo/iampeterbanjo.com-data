@@ -1,32 +1,24 @@
-import { from, of, throwError } from 'rxjs';
-import { XMLHttpRequest } from 'xmlhttprequest';
+import { throwError } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, catchError } from 'rxjs/operators';
 import * as R from 'ramda';
-import { lastFmChartGetTopTracks } from '../services';
 
-import { RequestParams } from '../types';
 import { Database, IChartTrack, IChartRawTrack, getDbConnection } from 'models';
 
-function createXHR() {
-	return new XMLHttpRequest();
-}
+import { getChartTopTracks, request } from '../services';
 
 const logCompleted = () => console.log('Complete');
 const logError = error => console.error(error);
 const logResult = result => console.log(result);
-
-const request = ({ url, method = 'GET' }: RequestParams) => ({
-	url,
-	createXHR,
-});
 
 export const addImportedDate = (
 	rawTopTracks: IChartRawTrack,
 ): IChartTrack[] => {
 	const tracks = R.pathOr([], ['tracks', 'track'], rawTopTracks);
 
-	if (!tracks || !tracks.length) throw new Error('No tracks found');
+	if (!tracks || !tracks.length) {
+		throw new Error('No tracks found');
+	}
 
 	return tracks.map(
 		(track: IChartTrack): IChartTrack => {
@@ -39,13 +31,7 @@ export const addImportedDate = (
 export default async function loadChartTopTracksProfile() {
 	const {} = await Database.init(getDbConnection);
 
-	ajax(request({ url: lastFmChartGetTopTracks }))
-		.pipe(
-			map(({ response }) => addImportedDate(response)),
-			catchError(error => {
-				console.error('error: ', error);
-				return throwError(error);
-			}),
-		)
+	ajax(request({ url: getChartTopTracks }))
+		.pipe(map(({ response }) => addImportedDate(response)))
 		.subscribe(logResult, logError, logCompleted);
 }
