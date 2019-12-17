@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import { DATA_PORT } from './env';
 
 const fastify = Fastify({ logger: true });
 fastify.get('/', async (request, reply) => {
@@ -7,7 +8,7 @@ fastify.get('/', async (request, reply) => {
 
 (async () => {
 	try {
-		await fastify.listen(3000);
+		await fastify.listen(DATA_PORT);
 
 		const port = fastify.server.address() || '';
 		fastify.log.info(`data listening on ${port}`);
