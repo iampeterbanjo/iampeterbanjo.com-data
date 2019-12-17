@@ -1,16 +1,45 @@
-import { throwError } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, tap } from 'rxjs/operators';
 import * as R from 'ramda';
 import Joi from '@hapi/joi';
+import pino from 'pino';
 
 import { Database, IChartTrack, IChartRawTrack, getDbConnection } from 'models';
 
 import { getChartTopTracks, request } from '../services';
 
-const logCompleted = () => console.log('Complete');
-const logError = error => console.error(error);
-const logResult = result => console.log(result);
+interface ILogger {
+	[key: string]: (message: string) => void;
+}
+
+class Reporter {
+	prefix;
+	logger;
+
+	constructor(prefix: string, logger?: Partial<ILogger>) {
+		this.prefix = prefix;
+		this.logger =
+			logger ||
+			pino({
+				prettyPrint: {
+					levelFirst: true,
+				},
+			});
+	}
+
+	log = (
+		message: string,
+		level: 'fatal' | 'warn' | 'error' | 'info' = 'info',
+	) => {
+		this.logger[level](`${this.prefix}: ${message}`);
+	};
+}
+
+const report = new Reporter('loadChartTopTracksProfile');
+
+const logCompleted = () => report.log('complete');
+const logError = error => report.log(error, 'error');
+const logResult = result => report.log(result);
 
 export const addImportedDate = (
 	rawTopTracks: IChartRawTrack,
@@ -58,10 +87,15 @@ export const checkChartTracks = (tracks: IChartTrack[]) => {
 };
 
 export default async function loadChartTopTracksProfile() {
-	const {} = await Database.init(getDbConnection);
+	const { connection } = await Database.init(getDbConnection);
 
-	ajax(request({ url: getChartTopTracks }))
+	await ajax(request({ url: getChartTopTracks }))
 		.pipe(map(({ response }) => addImportedDate(response)))
-		.pipe(map(tracks => checkChartTracks(tracks)))
-		.subscribe(logResult, logError, logCompleted);
+		.pipe(
+			tap(() => report.log('validating tracks')),
+			map(tracks => checkChartTracks(tracks)),
+		)
+		.subscribe(null, logError, logCompleted);
+
+	connection.close();
 }

@@ -1,3 +1,5 @@
 import loadChartTopTracksProfile from './pipe/loadChartTopTracksProfile';
 
-loadChartTopTracksProfile();
+(async () => {
+	await loadChartTopTracksProfile();
+})();
