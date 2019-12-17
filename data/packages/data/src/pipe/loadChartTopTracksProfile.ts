@@ -1,9 +1,15 @@
 import { ajax } from 'rxjs/ajax';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, concatMap } from 'rxjs/operators';
 import * as R from 'ramda';
 import Joi from '@hapi/joi';
 
-import { Database, IChartTrack, IChartRawTrack, getDbConnection } from 'models';
+import {
+	Database,
+	IChartTrack,
+	IChartRawTrack,
+	IChartTrackModel,
+	getDbConnection,
+} from 'models';
 
 import { getChartTopTracks, request, Reporter } from '../services';
 
@@ -57,16 +63,40 @@ export const checkChartTracks = (tracks: IChartTrack[]) => {
 	});
 };
 
-export default async function loadChartTopTracksProfile() {
-	const { connection } = await Database.init(getDbConnection);
+export const saveChartTracks = async (
+	tracks: IChartTrack[],
+	ChartTrackModel: IChartTrackModel,
+): Promise<IChartTrack[]> => {
+	await ChartTrackModel.deleteMany({});
+	await ChartTrackModel.insertMany(tracks);
 
+	return tracks;
+};
+
+export default async function loadChartTopTracksProfile() {
+	const { connection, uri, ChartTrackModel } = await Database.init(
+		getDbConnection,
+	);
+	const { modelName } = ChartTrackModel;
+
+	logInfo(`connected to ${uri}`);
 	await ajax(request({ url: getChartTopTracks }))
-		.pipe(map(({ response }) => addImportedDate(response)))
 		.pipe(
-			tap(() => logInfo('validating tracks')),
+			tap(() => logInfo(`lastFm response`)),
+			map(({ response }) => addImportedDate(response)),
+		)
+		.pipe(
+			tap(() => logInfo('validating')),
 			map(tracks => checkChartTracks(tracks)),
 		)
-		.subscribe(null, logError, () => logInfo('complete'));
-
-	connection.close();
+		.pipe(
+			tap(() => logInfo(`saving ${modelName}`)),
+			concatMap(async tracks => await saveChartTracks(tracks, ChartTrackModel)),
+		)
+		.subscribe({
+			complete: () => {
+				connection.close();
+				logInfo('complete');
+			},
+		});
 }
