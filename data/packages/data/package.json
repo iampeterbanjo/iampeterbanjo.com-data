@@ -40,6 +40,7 @@
 		"models": "file:../models",
 		"ramda": "^0.26.1",
 		"rxjs": "^6.5.3",
+		"time": "file:../time",
 		"typescript": "^3.7.3",
 		"xmlhttprequest": "^1.8.0"
 	},

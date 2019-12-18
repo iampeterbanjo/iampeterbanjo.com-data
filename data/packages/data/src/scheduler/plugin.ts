@@ -1,8 +1,7 @@
-import utils from '../utils';
+import time from 'time';
+
 import Scheduler from './Scheduler';
 import * as controller from './controller';
-
-const { time } = utils;
 
 export default {
 	name: 'schedule',
