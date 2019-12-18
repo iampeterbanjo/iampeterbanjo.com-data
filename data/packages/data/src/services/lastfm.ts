@@ -1,4 +1,4 @@
-import { LASTFM_API_URL, LASTFM_API_KEY } from '../env';
+import { LASTFM_API_URL, LASTFM_API_KEY } from 'env';
 
 const query = new URLSearchParams([
 	['method', 'chart.getTopTracks'],

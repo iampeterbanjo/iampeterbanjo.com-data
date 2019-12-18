@@ -5,7 +5,7 @@ import {
 	AUTH0_DOMAIN,
 	AUTH0_PUBLIC_KEY,
 	AUTH0_SECRET_KEY,
-} from '../env';
+} from 'env';
 
 export default {
 	plugin: Hodor,

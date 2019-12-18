@@ -3,7 +3,7 @@ import Hapi from '@hapi/hapi';
 import { Reporter } from './services';
 import schedule from './scheduler';
 
-import { DATA_PORT } from './env';
+import { DATA_PORT } from 'env';
 
 const report = new Reporter('api');
 
