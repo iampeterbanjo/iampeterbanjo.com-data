@@ -15,9 +15,6 @@ import { getChartTopTracks, request, Reporter } from '../services';
 
 const report = new Reporter('loadChartTopTracksProfile');
 
-const logError = (error: string) => report.log(error, 'error');
-const logInfo = (message: string) => report.log(message);
-
 export const addImportedDate = (
 	rawTopTracks: IChartRawTrack,
 ): IChartTrack[] => {
@@ -79,24 +76,25 @@ export default async function loadChartTopTracksProfile() {
 	);
 	const { modelName } = ChartTrackModel;
 
-	logInfo(`connected to ${uri}`);
+	report.log(`connected to ${uri}`);
 	await ajax(request({ url: getChartTopTracks }))
 		.pipe(
-			tap(() => logInfo(`lastFm response`)),
+			tap(() => report.log(`lastFm response`)),
 			map(({ response }) => addImportedDate(response)),
 		)
 		.pipe(
-			tap(() => logInfo('validating')),
+			tap(() => report.log('validating')),
 			map(tracks => checkChartTracks(tracks)),
 		)
 		.pipe(
-			tap(() => logInfo(`saving ${modelName}`)),
+			tap(() => report.log(`saving ${modelName}`)),
 			concatMap(async tracks => await saveChartTracks(tracks, ChartTrackModel)),
 		)
 		.subscribe({
 			complete: () => {
 				connection.close();
-				logInfo('complete');
+				report.log('complete');
 			},
+			error: error => report.log(error, 'error'),
 		});
 }

@@ -7,6 +7,7 @@ interface ILogger {
 export class Reporter {
 	prefix;
 	logger;
+
 	constructor(prefix: string, logger?: Partial<ILogger>) {
 		this.prefix = prefix;
 		this.logger =
@@ -17,6 +18,7 @@ export class Reporter {
 				},
 			});
 	}
+
 	log = (
 		message: string,
 		level: 'fatal' | 'warn' | 'error' | 'info' = 'info',

@@ -1,19 +1,18 @@
-import Fastify from 'fastify';
-import { DATA_PORT } from './env';
+import { Reporter } from './services';
+import api from './api';
 
-const fastify = Fastify({ logger: true });
-fastify.get('/', async (request, reply) => {
-	return { hello: 'world' };
-});
+const report = new Reporter('start');
 
 (async () => {
 	try {
-		await fastify.listen(DATA_PORT);
+		const server = await api();
 
-		const port = fastify.server.address() || '';
-		fastify.log.info(`data listening on ${port}`);
-	} catch (err) {
-		fastify.log.error(err);
+		await server.start();
+		await server.app.scheduler.init();
+
+		report.log(`server running at ${server.info.uri}`);
+	} catch (error) {
+		report.log(error, 'fatal');
 		process.exit(1);
 	}
 })();
