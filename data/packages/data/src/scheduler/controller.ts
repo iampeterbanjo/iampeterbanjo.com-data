@@ -1,5 +1,5 @@
 import * as routes from './routes';
-import Boom from 'boom';
+import Boom from '@hapi/boom';
 
 export const handleListJobsGet = server => {
 	const { method, url } = routes.get_jobs();
