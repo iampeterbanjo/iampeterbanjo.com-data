@@ -10,10 +10,11 @@
 		"before-commit": "run-s format",
 		"clean": "rm -rf node_modules",
 		"format": "pretty-quick --staged",
-		"dev": "nodemon -e js,json,html,md -x 'yarn start'",
-		"start": "node ./lib/index.js",
+		"start": "node ./build/index.js",
 		"test": "lab ./__tests__/",
-		"test-watch": "nodemon -e js,json,html,md -x 'yarn test'",
+		"dev": "run-p watch-*",
+		"watch-start": "nodemon --watch build -e js,json,html,md -x 'npm start'",
+		"watch-test": "nodemon -e ts,json,html,md -x 'npm test'",
 		"watch-ts": "tsc-watch --noClear -p tsconfig.build.json"
 	},
 	"husky": {
@@ -53,6 +54,7 @@
 		"@types/ramda": "^0.26.38",
 		"husky": "^3.1.0",
 		"nodemon": "^1.19.1",
+		"npm-run-all": "^4.1.5",
 		"prettier": "^1.19.1",
 		"pretty-quick": "^2.0.1",
 		"ts-node": "^8.5.4",
