@@ -2,6 +2,7 @@ import Hapi from '@hapi/hapi';
 
 import { Reporter } from './services';
 import schedule from './scheduler';
+import security from './security';
 
 import { DATA_PORT } from 'env';
 
@@ -25,7 +26,11 @@ export default async function main() {
 			},
 		});
 
-		await Promise.all([server.register(schedule)]);
+		await Promise.all([
+			server.register(security),
+			server.register(schedule),
+			//
+		]);
 
 		return server;
 	} catch (error) {

@@ -1,40 +1,32 @@
-import Helpers from './helpers';
-import jobs from './jobs';
-import utils from '../utils';
+import time from 'time';
+import loadChartTopTracksProfile from '../pipe/loadChartTopTracksProfile';
+import { Reporter } from '../services';
 
-const { time } = utils;
+const report = new Reporter('Scheduler');
 
 export default class Scheduler {
-	public helpers;
 	public agenda;
-	public routines = new Map();
 
-	constructor({ server, Agenda, options }) {
+	constructor({ Agenda, options }) {
 		this.agenda = new Agenda(options);
-		this.helpers = new Helpers(server);
-
-		this.addRoutines();
 	}
 
 	async init() {
+		this.agenda.on('success', ({ attrs }) =>
+			report.log(`SUCCESS: ${attrs.name}`),
+		);
+		this.agenda.on('fail', ({ attrs }) =>
+			report.log(`ERROR: ${attrs.name}`, 'error'),
+		);
+
 		this.setupImportChartTopTracks();
+
 		await this.agenda.start();
 	}
 
-	addRoutines = () => {
-		this.routines.set('IMPORT_CHART_TOP_TRACKS', {
-			id: 'IMPORT_CHART_TOP_TRACKS',
-			description: 'Import LastFm chart top tracks',
-		});
-	};
-
 	setupImportChartTopTracks = async () => {
-		const { id, description } = this.routines.get('IMPORT_CHART_TOP_TRACKS');
+		this.agenda.define('IMPORT_CHART_TRACKS', loadChartTopTracksProfile);
 
-		this.agenda.define(id, () => this.helpers.importChartTracks());
-		this.agenda.on(`success:${id}`, console.info(`SUCCESS: ${description}`));
-		this.agenda.on(`fail:${id}`, console.error(`ERROR: ${description}`));
-
-		await this.agenda.every(time.oneDay, id);
+		await this.agenda.every(time.oneDay, 'IMPORT_CHART_TRACKS');
 	};
 }
