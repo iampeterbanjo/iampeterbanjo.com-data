@@ -13,7 +13,6 @@ export default {
 		const { uri } = await getDbConnection();
 
 		server.app.scheduler = new Scheduler({
-			server,
 			Agenda,
 			options: {
 				db: { address: uri },

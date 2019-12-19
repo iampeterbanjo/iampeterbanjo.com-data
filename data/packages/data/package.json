@@ -13,25 +13,25 @@
 		"start": "node ./build/index.js",
 		"test": "lab ./__tests__/",
 		"dev": "run-p watch-*",
-		"watch-start": "nodemon --watch build -e js,json,html,md -x 'npm start'",
-		"watch-test": "nodemon -e ts,json,html,md -x 'npm test'",
+		"watch-start": "nodemon --watch --delay 500ms build -e js,json,html,md -x 'npm start'",
+		"watch-test": "nodemon --watch src -e ts,json,html,md -x 'npm test'",
 		"watch-ts": "tsc-watch --noClear -p tsconfig.build.json"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run before-commit"
-		}
 	},
 	"keywords": [
 		"data",
 		"parsing",
 		"processing"
 	],
+	"license": "ISC",
 	"author": {
 		"email": "npm@iampeterbanjo.com",
 		"name": "Peter Banjo"
 	},
-	"license": "ISC",
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run before-commit"
+		}
+	},
 	"dependencies": {
 		"@hapi/boom": "^8.0.1",
 		"@hapi/hapi": "^18.4.0",
