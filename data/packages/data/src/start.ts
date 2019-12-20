@@ -10,7 +10,7 @@ const report = new Reporter('start');
 		await server.start();
 		await server.app.scheduler.init();
 
-		report.log(`server running at ${server.info.uri}`);
+		report.log(`Data running at ${server.info.uri}`);
 	} catch (error) {
 		report.log(error, 'fatal');
 		process.exit(1);

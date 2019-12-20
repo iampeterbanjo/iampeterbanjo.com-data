@@ -8,6 +8,8 @@ import { DATA_PORT } from 'env';
 
 const report = new Reporter('api');
 
+console.log(`DATA_PORT: ${DATA_PORT}`);
+
 export default async function main() {
 	try {
 		const server = Hapi.Server({
