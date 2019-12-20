@@ -6,6 +6,7 @@ const report = new Reporter('Scheduler');
 
 export default class Scheduler {
 	public agenda;
+	public routines = new Map();
 
 	constructor({ Agenda, options }) {
 		this.agenda = new Agenda(options);
@@ -19,14 +20,19 @@ export default class Scheduler {
 			report.log(`ERROR: ${attrs.name}`, 'error'),
 		);
 
-		this.setupImportChartTopTracks();
-
 		await this.agenda.start();
+		await this.setupImportChartTopTracks();
 	}
 
 	setupImportChartTopTracks = async () => {
-		this.agenda.define('IMPORT_CHART_TRACKS', loadChartTopTracksProfile);
+		const id = 'IMPORT_CHART_TRACKS';
 
-		await this.agenda.every(time.oneDay, 'IMPORT_CHART_TRACKS');
+		this.routines.set(id, {
+			id,
+			description: 'Import LastFm chart top tracks',
+		});
+		this.agenda.define(id, loadChartTopTracksProfile);
+
+		await this.agenda.every(time.oneDay, id);
 	};
 }
