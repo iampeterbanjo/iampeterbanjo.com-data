@@ -40,7 +40,7 @@
 		"csvtojson": "^2.0.10",
 		"env": "git+https://github.com/iampeterbanjo/iampeterbanjo.com-env.git",
 		"hapi-hodor": "git+https://github.com/iampeterbanjo/hapi-hodor.git",
-		"models": "file:../models",
+		"models": "git+https://github.com/iampeterbanjo/iampeterbanjo.com-models.git",
 		"ramda": "^0.26.1",
 		"rxjs": "^6.5.3",
 		"time": "file:../time",
