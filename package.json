@@ -38,7 +38,7 @@
 		"@hapi/joi": "^15.1.1",
 		"agenda": "^2.3.0",
 		"csvtojson": "^2.0.10",
-		"env": "file:../env",
+		"env": "git+https://github.com/iampeterbanjo/iampeterbanjo.com-env.git",
 		"hapi-hodor": "git+https://github.com/iampeterbanjo/hapi-hodor.git",
 		"models": "file:../models",
 		"ramda": "^0.26.1",
