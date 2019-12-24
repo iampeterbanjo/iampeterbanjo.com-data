@@ -12,7 +12,7 @@
 		"format": "pretty-quick --staged",
 		"start": "node ./build/index.js",
 		"test": "echo 'no tests' && exit 0",
-		"dev": "run-p watch-*",
+		"dev": "run-s build watch-*",
 		"watch-start": "nodemon --watch build --delay 500ms -e js,json,html,md -x 'npm start'",
 		"watch-test": "nodemon --watch src -e ts,json,html,md -x 'npm test'",
 		"watch-ts": "tsc-watch --noClear -p tsconfig.build.json"
@@ -36,6 +36,8 @@
 		"@hapi/boom": "^8.0.1",
 		"@hapi/hapi": "^18.4.0",
 		"@hapi/joi": "^15.1.1",
+		"@iampeterbanjo/env": "^1.0.3",
+		"@iampeterbanjo/models": "^1.0.3",
 		"agenda": "^2.3.0",
 		"csvtojson": "^2.0.10",
 		"env": "git+https://github.com/iampeterbanjo/iampeterbanjo.com-env.git",
