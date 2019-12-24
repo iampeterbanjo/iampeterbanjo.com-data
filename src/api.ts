@@ -4,7 +4,7 @@ import { Reporter } from './services';
 import schedule from './scheduler';
 import security from './security';
 
-import { DATA_PORT } from 'env';
+import { DATA_PORT } from '@iampeterbanjo/env';
 
 const report = new Reporter('api');
 

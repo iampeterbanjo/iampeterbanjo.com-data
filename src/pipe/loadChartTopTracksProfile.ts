@@ -9,7 +9,7 @@ import {
 	IChartRawTrack,
 	IChartTrackModel,
 	getDbConnection,
-} from 'models';
+} from '@iampeterbanjo/models';
 
 import { getChartTopTracks, request, Reporter } from '../services';
 

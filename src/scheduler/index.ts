@@ -1,4 +1,4 @@
-import { getDbConnection } from 'models';
+import { getDbConnection } from '@iampeterbanjo/models';
 import Agenda from 'agenda';
 
 import plugin from './plugin';
